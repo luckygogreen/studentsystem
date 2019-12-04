@@ -29,12 +29,19 @@ class Customers(models.Model):
     def __str__(self):
         return self.phone
 
+    class Meta:
+        verbose_name_plural = '客户表 Customers'
+
 
 class Tags(models.Model):
+    # 标签表
     tagname = models.CharField(unique=True, max_length=64, verbose_name='标签名称')
 
     def __str__(self):
         return self.tagname
+
+    class Meta:
+        verbose_name_plural = '标签表 Tags'
 
 
 class CustomerFollowUp(models.Model):
@@ -54,6 +61,9 @@ class CustomerFollowUp(models.Model):
     def __str__(self):
         return self.customers, self.intention
 
+    class Meta:
+        verbose_name_plural = '客户跟进表 CustomerFollowUp'
+
 
 class UserProfile(models.Model):
     # 用户表
@@ -64,6 +74,9 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name_plural = '用户表 UserProfile'
+
 
 class Role(models.Model):
     # 角色表
@@ -71,6 +84,9 @@ class Role(models.Model):
 
     def __str__(self):
         return self.name  # #
+
+    class Meta:
+        verbose_name_plural = '角色表 Role'
 
 
 class Course(models.Model):
@@ -83,14 +99,20 @@ class Course(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name_plural = '课程表 Course'
+
 
 class Branch(models.Model):
-    # 校区
+    # 校区表
     name = models.CharField(max_length=64, unique=True)
     addr = models.CharField(max_length=128)
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name_plural = '校区表 Branch'
 
 
 class Classlist(models.Model):
@@ -113,6 +135,7 @@ class Classlist(models.Model):
 
     class Meta:
         unique_together = ('branch', 'course', 'semester')
+        verbose_name_plural = '班级表 Classlist'
 
 
 class Enrollment(models.Model):
@@ -129,6 +152,7 @@ class Enrollment(models.Model):
 
     class Meta:
         unique_together = ('customer', 'enrolled_class')
+        verbose_name_plural = '学生报名表 Enrollment'
 
 
 class Payment(models.Model):
@@ -141,6 +165,9 @@ class Payment(models.Model):
 
     def __str__(self):
         return self.customer, self.course, self.amount
+
+    class Meta:
+        verbose_name_plural = '缴费记录表 Payment'
 
 
 class CourseRecord(models.Model):
@@ -159,6 +186,7 @@ class CourseRecord(models.Model):
 
     class Meta:
         unique_together = ('fromclass', 'daynumber')
+        verbose_name_plural = '上课记录表 CourseRecord'
 
 
 class StudyRecord(models.Model):
@@ -191,3 +219,7 @@ class StudyRecord(models.Model):
 
     def __str__(self):
         return self.student, self.course_record, self.score, self.attendance
+
+    class Meta:
+        verbose_name_plural = '学习记录表 StudyRecord'
+        unique_together = ('student', 'course_record')
