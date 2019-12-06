@@ -1,0 +1,32 @@
+{% extends 'king_admin/table_index.html' %}
+{% load tags %}
+{% block container %}
+    <div class="jumbotron mt-3">
+        <div class="container">
+            <div class="panel panel-info">
+                <div class="panel-heading">{{ app_name }}-->{{ table_name }}</div>
+                <div class="panel-body">
+                    <table class="table">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            {% for items in admin_class.list_display %}
+                                <th scope="col">{{ items }}</th>
+                            {% endfor %}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% get_query_sets admin_class as query_sets %}
+                        {% for obj in query_sets %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                {% build_table_row obj admin_class %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

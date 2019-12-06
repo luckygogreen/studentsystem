@@ -21,6 +21,14 @@ class Customers(models.Model):
     referral_from = models.CharField(verbose_name="转介绍电话", max_length=64, null=True, blank=True)
     consult_course = models.ForeignKey('Course', on_delete='models.CASCADE', verbose_name='所咨询课程')
     cousult_content = models.TextField(verbose_name="咨询详情")
+    status_choices = (
+        (0, '已报名'),
+        (1,'未报名'),
+        (2,'有意向'),
+        (3,'考虑中'),
+        (4,'不学了')
+    )
+    status = models.SmallIntegerField(choices=status_choices,default=1)
     tags = models.ManyToManyField(to='Tags')
     cunsultant = models.ForeignKey('UserProfile', on_delete=models.CASCADE, verbose_name='接待销售')
     momo = models.TextField(blank=True, null=True, verbose_name='备注')
@@ -81,12 +89,23 @@ class UserProfile(models.Model):
 class Role(models.Model):
     # 角色表
     name = models.CharField(max_length=32, unique=True)
+    menus = models.ManyToManyField(to='Menu', blank=True)
 
     def __str__(self):
         return self.name  # #
 
     class Meta:
         verbose_name_plural = '角色表 Role'
+
+
+class Menu(models.Model):
+    name = models.CharField(max_length=32)
+    url_name = models.CharField(max_length=64)
+
+    def __str__(self):
+        return self.name
+    class Meta:
+        verbose_name_plural = '导航表 Menu'
 
 
 class Course(models.Model):

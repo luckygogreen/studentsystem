@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load tags %}
+{% block table_index %}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/crm/">StudentsCRM</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/admin/">{{ request.user }}</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    {% block container %}
+        <div class="jumbotron mt-3">
+        <div class="container">
+            <div class="panel panel-info">
+                {% for appname,apptable in table_list.items %}
+                    <div class="panel-heading">{{ appname }}</div>
+                    <div class="panel-body">
+
+                        <table class="table">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Table</th>
+                                <th scope="col">Add</th>
+                                <th scope="col">Change</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for tablename,admin in apptable.items %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td><a href="{% url 'table_objs' appname tablename  %}">{% render_app_name admin %}</a></td>
+                                    <td>add</td>
+                                    <td>change</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                    </div>
+                {% endfor %}
+        </div>
+    </div>
+    {% endblock %}
+
+{% endblock %}
